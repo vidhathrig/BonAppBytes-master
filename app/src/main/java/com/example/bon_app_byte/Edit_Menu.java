@@ -24,24 +24,28 @@ public class Edit_Menu extends AppCompatActivity {
     public class dish
     {
         private String name;
-        private String price;
+        private int price;
+        private boolean available;
 
         dish()
         {
         }
-        dish(String name,String price)
+        dish(String name,int price,boolean available)
         {
             this.name = name;
             this.price = price;
+            this.available = available;
         }
 
         public String getName() {
             return name;
         }
 
-        public String getPrice() {
+        public int getPrice() {
             return price;
         }
+
+        public boolean getAvailable(){return  available;}
     }
     @Override
 
@@ -58,13 +62,17 @@ public class Edit_Menu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String name = Name.getText().toString();
-                String price = Price.getText().toString();
-                dish d = new dish(name,price);
+                name = name.replace(' ','-');
+                name = name.toLowerCase();
+                int price =Integer.parseInt(Price.getText().toString()) ;
+                dish d = new dish(name,price,true);
 
-                MenuRef.child(d.getName()).setValue(d.price);
+                MenuRef.child(d.getName()).setValue(d);
                 Toast.makeText(getBaseContext(), "Dish added successfully!", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(Edit_Menu.this,MainActivity.class);
-                startActivity(intent);
+                Name.setText("");
+                Price.setText("");
+                //Intent intent = new Intent(Edit_Menu.this,MainActivity.class);
+               // startActivity(intent);
 
             }
         });
