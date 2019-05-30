@@ -23,18 +23,24 @@ public class Edit_Menu extends AppCompatActivity {
     DatabaseReference rootRef,MenuRef;
     public class dish
     {
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public void setPrice(int price) {
+            this.price = price;
+        }
+
+        public void setAvailable(boolean available) {
+            this.available = available;
+        }
+
         private String name;
         private int price;
         private boolean available;
 
         dish()
         {
-        }
-        dish(String name,int price,boolean available)
-        {
-            this.name = name;
-            this.price = price;
-            this.available = available;
         }
 
         public String getName() {
@@ -65,7 +71,10 @@ public class Edit_Menu extends AppCompatActivity {
                 name = name.replace(' ','-');
                 name = name.toLowerCase();
                 int price =Integer.parseInt(Price.getText().toString()) ;
-                dish d = new dish(name,price,true);
+                dish d = new dish();
+                d.setName(name);
+                d.setAvailable(true);
+                d.setPrice(price);
 
                 MenuRef.child(d.getName()).setValue(d);
                 Toast.makeText(getBaseContext(), "Dish added successfully!", Toast.LENGTH_LONG).show();
